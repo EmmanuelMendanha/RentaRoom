@@ -40,6 +40,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Booking $booking_users = null;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -150,4 +154,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getBookingUsers(): ?Booking
+    {
+        return $this->booking_users;
+    }
+
+    public function setBookingUsers(?Booking $booking_users): static
+    {
+        $this->booking_users = $booking_users;
+
+        return $this;
+    }
+
 }
