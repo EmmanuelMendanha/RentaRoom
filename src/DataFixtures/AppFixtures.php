@@ -19,7 +19,7 @@ class AppFixtures extends Fixture
         // Set admin
         $admin = new User();
         $admin->setEmail('admin@admin.fr')
-            ->setRole('ROLE_ADMIN')
+            ->setRoles(['ROLE_ADMIN'])
             ->setName('Admin')
 
             ->setPassword('$2y$13$wqXiXE8U6QhYtIRJFedLA.MkNVmDzn89jVz5CBYENUOwHfAlyYNG2')
@@ -61,7 +61,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 20; $i++) {
             $user = new User();
             $user->setEmail('user' . $i . '@user.fr')
-                ->setRole('ROLE_USER')
+                ->setRoles(['ROLE_USER'])
                 ->setName($faker->Name)
                 ->setPhone($faker->phoneNumber)
                 ->setPassword('$2y$13$wqXiXE8U6QhYtIRJFedLA.MkNVmDzn89jVz5CBYENUOwHfAlyYNG2')
