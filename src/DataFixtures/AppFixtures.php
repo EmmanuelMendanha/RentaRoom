@@ -43,6 +43,7 @@ class AppFixtures extends Fixture
         }
 
         // Set rooms
+        $roomImages = ['salle1.jpg', 'salle2.jpg', 'salle3.jpg', 'salle4.jpg', 'salle5.jpg'];
         for ($i = 0; $i < 20; $i++) {
 
             $room = new Room();
@@ -51,12 +52,13 @@ class AppFixtures extends Fixture
                 ->setAddress($faker->address)
                 ->SetCapacity($faker->randomNumber(4))
                 ->setDescription($faker->text(255))
-                ->setPrice($faker->numberBetween(150, 1500));
-
-
+                ->setPrice($faker->numberBetween(150, 1500))
+                ->setImageMain($faker->randomElement($roomImages));
+            $manager->persist($room);
             $manager->flush();
         }
-        if ($i > 70) {
+
+        for ($i = 0; $i < 20; $i++) {
             $user = new User();
             $user->setEmail('user' . $i . '@user.fr')
                 ->setRole('ROLE_USER')
@@ -65,19 +67,18 @@ class AppFixtures extends Fixture
                 ->setPassword('$2y$13$wqXiXE8U6QhYtIRJFedLA.MkNVmDzn89jVz5CBYENUOwHfAlyYNG2')
                 ->setAddress($faker->address);
             $manager->persist($user);
-
+            $manager->flush();
         }
-        $ergonomics = ['Acces_PMR', 'Lumiere_Naturelle', 'Lumiere_Artificielle', 'Isolation_Phonique'];
+
+        $ergonomics = ['lumiere naturelle', 'lumiere artificielle', 'acces PMR', 'isolation phonique'];
         for ($i = 0; $i <= 4; $i++) {
             $ergonomy = new Ergonomy();
             $ergonomy
                 ->setDecription($faker->text(255))
-
-                ->setIcone('fa fa-' . $ergonomics[$i])
-                ->setName($faker->Name);
-
+                ->setName($faker->randomElement($ergonomics))
+                ->setIcone('fa fa-');
             $manager->persist($ergonomy);
-
+            $manager->flush();
         }
     }
 }
