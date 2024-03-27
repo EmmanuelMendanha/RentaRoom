@@ -18,4 +18,15 @@ class RoomsController extends AbstractController
             'rooms' => $rooms,
         ]);
     }
+
+    #[Route('/rooms/{id}', name: 'room_show')]
+    public function showRoom(RoomRepository $roomRepository, $id): Response
+    {
+        $room = $roomRepository->find($id);
+
+        return $this->render('rooms/show.html.twig', [
+            'room' => $room,
+        ]);
+    }
 }
+

@@ -1,0 +1,9 @@
+{# templates/rooms/show.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ room.title }}</h1>
+    <p>{{ room.description }}</p>
+    <p>Price: {{ room.price }}</p>
+    <img src="{{ room.imageMain }}" alt="{{ room.title }}">
+{% endblock %}
