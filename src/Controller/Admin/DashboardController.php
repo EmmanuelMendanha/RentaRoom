@@ -36,6 +36,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Ergonomy', 'fas fa-chair', Ergonomy::class);
         yield MenuItem::linkToCrud('Equipment', 'fas fa-laptop', Equipment::class);
         yield MenuItem::linkToCrud('Software', 'fas fa-code', Software::class);
-        yield MenuItem::linkToRoute('Back to the website', 'fas fa-home', '/');
+        yield MenuItem::linkToRoute('Back to the website', 'fas fa-home', 'home');
     }
 }
