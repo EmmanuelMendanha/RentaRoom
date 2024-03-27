@@ -43,6 +43,24 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('name', null, [
+                'label' => 'Name',
+                'attr' => [
+                    'placeholder' => 'Enter the name of your company',
+                ],
+            ])
+            ->add('phone', null, [
+                'label' => 'Phone',
+                'attr' => [
+                    'placeholder' => 'Enter your phone number',
+                ],
+            ])
+            ->add('address', null, [
+                'label' => 'Address',
+                'attr' => [
+                    'placeholder' => 'Enter your address',
+                ],
+            ])
         ;
     }
 
