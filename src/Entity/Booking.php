@@ -34,6 +34,9 @@ class Booking
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'booking_users')]
     private Collection $users;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $created_at = null;
+
 
     public function __construct()
     {
@@ -151,6 +154,18 @@ class Booking
                 $user->setBookingUsers(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }
