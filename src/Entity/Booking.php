@@ -22,11 +22,8 @@ class Booking
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateOut = null;
 
-<<<<<<< HEAD
-=======
   
 
->>>>>>> 62efc3cd991fccc5cd6834935fbc2e9c81868977
     #[ORM\Column(nullable: true)]
     private ?bool $status = null;
 
@@ -36,13 +33,8 @@ class Booking
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'booking_users')]
     private Collection $users;
 
-<<<<<<< HEAD
     // #[ORM\Column]
     // private ?\DateTimeImmutable $created_at = null;
-=======
-    ##[ORM\Column]
-    #private ?\DateTimeImmutable $created_at = null;
->>>>>>> 62efc3cd991fccc5cd6834935fbc2e9c81868977
 
 
     public function __construct()
@@ -80,11 +72,6 @@ class Booking
         return $this;
     }
 
-<<<<<<< HEAD
-=======
-   
-
->>>>>>> 62efc3cd991fccc5cd6834935fbc2e9c81868977
     public function isStatus(): ?bool
     {
         return $this->status;
