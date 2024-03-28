@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 class Booking
 {
@@ -22,25 +23,18 @@ class Booking
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateOut = null;
 
-  
-
     #[ORM\Column(nullable: true)]
     private ?bool $status = null;
 
     #[ORM\ManyToMany(targetEntity: Room::class, mappedBy: 'bookings')]
     private Collection $rooms;
 
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'booking_users')]
-    private Collection $users;
-
-    // #[ORM\Column]
-    // private ?\DateTimeImmutable $created_at = null;
-
+    #[ORM\ManyToOne(inversedBy: 'booking_users')]
+    private ?User $user = null;
 
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
-        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,42 +112,17 @@ class Booking
     /**
      * @return Collection<int, User>
      */
-    public function getUsers(): Collection
+
+    public function getUser(): ?User
     {
-        return $this->users;
+        return $this->user;
     }
 
-    public function addUser(User $user): static
+    public function setUser(?User $user): static
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->setBookingUsers($this);
-        }
+        $this->user = $user;
 
         return $this;
     }
 
-    public function removeUser(User $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getBookingUsers() === $this) {
-                $user->setBookingUsers(null);
-            }
-        }
-
-        return $this;
-    }
-
-    #public function getCreatedAt(): ?\DateTimeImmutable
-    #{
-     #   return $this->created_at;
-    #}
-
-    #public function setCreatedAt(\DateTimeImmutable $created_at): static
-    #{
-     #   $this->created_at = $created_at;
-
-      #  return $this;
-    #}
 }

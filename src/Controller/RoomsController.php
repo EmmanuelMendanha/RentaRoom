@@ -39,7 +39,7 @@ class RoomsController extends AbstractController
         
         $booking = new Booking();
         $booking->getRooms($room);
-        $booking->getUsers($this->getUser()); // Assuming you have a logged in user.
+        $booking->getUser($this->getUser()); // Assuming you have a logged in user.
         $booking->setDateIn(new \DateTime()); // Set this to the desired start date.
         $booking->setDateOut(new \DateTime()); // Set this to the desired end date.
 
@@ -47,7 +47,6 @@ class RoomsController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute('room_show', ['id' => $id]);
-
 
     }
 

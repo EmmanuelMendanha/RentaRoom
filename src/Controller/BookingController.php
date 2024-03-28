@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Booking;
 use App\Repository\RoomRepository;
+use App\Repository\BookingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -27,7 +28,7 @@ class BookingController extends AbstractController
 
         $booking = new Booking();
         $booking->getRooms($room);
-        $booking->getUsers($this->getUser()); // Assuming you have a logged in user.
+        $booking->getUser($this->getUser()); // Assuming you have a logged in user.
         $booking->setDateIn(new \DateTime()); // Set this to the desired start date.
         $booking->setDateOut(new \DateTime()); // Set this to the desired end date.
 
@@ -39,4 +40,14 @@ class BookingController extends AbstractController
 
         return $this->redirectToRoute('app_booking');
     }
+
+    /*#[Route('/booking/{id}/edit', name: 'booking_edit')]
+    public function edit(BookingRepository $bookingRepository, $id, EntityManagerInterface $em): Response
+    {
+    }
+
+    #[Route('/booking/{id}/delete', name: 'booking_delete')]
+    public function delete(BookingRepository $bookingRepository, $id, EntityManagerInterface $em): Response
+    {
+    }*/
 }
