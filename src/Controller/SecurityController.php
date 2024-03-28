@@ -18,7 +18,7 @@ class SecurityController extends AbstractController
                 if ($security->getUser() !== null) {
                     // Redirige vers la page appropriée en fonction du rôle de l'utilisateur
                     if (in_array('ROLE_USER', $security->getUser()->getRoles(), true)) {
-                    return $this->redirectToRoute('rooms');
+                    return $this->redirectToRoute('home');
                 } else {
                     // Redirige vers une autre page selon le rôle, ou vers une page par défaut
                     return $this->redirectToRoute('dashboard');
@@ -37,6 +37,6 @@ class SecurityController extends AbstractController
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
 }
