@@ -18,7 +18,7 @@ class SecurityController extends AbstractController
                 if ($security->getUser() !== null) {
                     // Redirige vers la page appropriée en fonction du rôle de l'utilisateur
                     if (in_array('ROLE_USER', $security->getUser()->getRoles(), true)) {
-                    return $this->redirectToRoute('rooms');
+                    return $this->redirectToRoute('home');
                 } else {
                     // Redirige vers une autre page selon le rôle, ou vers une page par défaut
                     return $this->redirectToRoute('dashboard');
