@@ -1,0 +1,22 @@
+{# templates/account/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Your bookings</h1>
+
+    {{ dump(bookings) }}
+
+    {% for booking in bookings %}
+    
+        <div>
+            <h2>Booking #{{ booking.id }}</h2>
+            <p>Start date: {{ booking.dateIn|date('Y-m-d') }}</p>
+            <p>End date: {{ booking.dateOut|date('Y-m-d') }}</p>
+
+
+
+            <a href="{{ path('booking_edit', {id: booking.id}) }}">Edit</a>
+            <a href="{{ path('booking_delete', {id: booking.id}) }}">Delete</a>
+        </div>
+    {% endfor %}
+{% endblock %}
