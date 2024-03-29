@@ -12,8 +12,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class UserController extends AbstractController
 {
     #[Route('/account', name: 'account')]
-    public function index(User $user): Response
+    public function index(): Response
     {
+        $user = $this->getUser();
         // Récupérer les réservations de l'utilisateur
         $bookings = $user->getBookingUsers();
 
@@ -23,11 +24,11 @@ class UserController extends AbstractController
             'bookings' => $bookings,
         ]);
     }
-<<<<<<< HEAD
-}
-=======
+
 }
 
 
 
->>>>>>> origin/HEAD
+
+
+

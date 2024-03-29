@@ -8,15 +8,33 @@
     <img src="{{ asset('images/') ~ room.imageMain }}" alt="{{ room.title }}">
 
     <h2>Book this room</h2>
-    <form action="{{ path('room_book', {id: room.id}) }}" method="post">
-        <label for="dateIn">Start date:</label>
-        <input type="date" id="dateIn" name="dateIn">
+    {{ form_errors(bookingForm) }}
 
-        <label for="dateOut">End date:</label>
-        <input type="date" id="dateOut" name="dateOut">
+				{{ form_start(bookingForm, {
+                    attr:{
+                        class: 'col-4 m-auto',
+                    } 
+                }) }}
 
-        <input type="submit" value="Book">
-    </form>
+				<div class="form-floating mb-2">
+					{{ form_widget(bookingForm.dateIn, {
+                            attr: {
+                                class: 'form-control',
+                            },
+                        }) }}
+					<label for="floatingInput">Date de début</label>
+				</div>
+                <div class="form-floating mb-2">
+					{{ form_widget(bookingForm.dateOut, {
+                            attr: {
+                                class: 'form-control',
+                            },
+                        }) }}
+					<label for="floatingInput">Date de fin</label>
+				</div>
+                <button type="submit" class="btn btn-primary">Réserver</button>
+
+                {{ form_end(bookingForm) }}
 
     {% for message in app.flashes('success') %}
     <div class="alert alert-success">

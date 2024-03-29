@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Booking;
+use App\Entity\Room;
 use App\Repository\RoomRepository;
 use App\Repository\BookingRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,18 +23,33 @@ class BookingController extends AbstractController
         ]);
     }
 
-    #[Route('/booking/{id}', name: 'booking_create')]
-    public function create(RoomRepository $roomRepository, $id, EntityManagerInterface $em, FlashBagInterface $flashBag): Response
+    /*#[Route('/booking/{id}', name: 'booking_create', methods: ['POST', 'GET'])]
+    public function create(RoomRepository $roomRepository, $id, EntityManagerInterface $em, FlashBagInterface $flashBag, Request $request): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+        
         $room = $roomRepository->find($id);
+    
+     
+        $previous = $request->headers->get('referer');
+        $user = $this->getUser();
+        
+        $newBooking = new Booking();
+        $newBooking->setNumber(uniqid())
+                ->setUser($user)
+                ->setRoom($room)
+                ->setDateIn(new \DateTime($request->request->get('date-in')))
+                ->setDateOut(new \DateTime($request->request->get('date-out')))
+                ->setCreatedAt(new \DateTime('now'))
+                ;
 
-        $booking = new Booking();
-        $booking->getRooms($room);
-        $booking->getUser($this->getUser()); // Assuming you have a logged in user.
-        $booking->setDateIn(new \DateTime()); // Set this to the desired start date.
-        $booking->setDateOut(new \DateTime()); // Set this to the desired end date.
+        //$user->getBookingUsers()       
+        $user->addBooking($newBooking);
+        
 
-        $em->persist($booking);
+        $em->persist($newBooking);
         $em->flush();
 
         $flashBag->add('success', 'Room booked successfully!');

@@ -32,6 +32,9 @@ class Booking
     #[ORM\ManyToOne(inversedBy: 'booking_users')]
     private ?User $user = null;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $Number = null;
+
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
@@ -121,6 +124,18 @@ class Booking
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getNumber(): ?string
+    {
+        return $this->Number;
+    }
+
+    public function setNumber(?string $Number): static
+    {
+        $this->Number = $Number;
 
         return $this;
     }
