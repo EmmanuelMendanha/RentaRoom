@@ -2,11 +2,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>{{ room.title }}</h1>
-    <p>{{ room.description }}</p>
-    <p>Price: {{ room.price }}</p>
-    <img src="{{ asset('images/') ~ room.imageMain }}" alt="{{ room.title }}">
+{% include 'components/navbar.html.twig' %}
+<div class="d-flex justify-content-center align-items-center mt-5">
+    <h1 class="text-primary">Conference Hall Booking</h1>
+</div>
+<div class="container mt-5">
 
+<<<<<<< HEAD
     <h2>Book this room</h2>
     {{ form_errors(bookingForm) }}
 
@@ -35,10 +37,44 @@
                 <button type="submit" class="btn btn-primary">Réserver</button>
 
                 {{ form_end(bookingForm) }}
+=======
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-4 shadow-sm">
+            
+                <img src="{{ asset('images/') ~ room.imageMain }}" alt="{{ room.title }}" class="card-img-top">
+                <div class="card-body">
+                    <h1 class="card-title">{{ room.title }}</h1>
+                    <p class="card-text">{{ room.description }}</p>
+                    <p class="card-text">Price: {{ room.price }} &euro;</p>
+                </div>
+            </div>
 
-    {% for message in app.flashes('success') %}
-    <div class="alert alert-success">
-        {{ message }}
+            <h2 class="text-primary">Book this room</h2>
+            <form action="{{ path('room_book', {id: room.id}) }}" method="post" class="mb-4">
+                <div class="form-group">
+                    <label for="dateIn" class="text-primary">Start date:</label>
+                    <input type="date" id="dateIn" name="dateIn" class="form-control" style="margin-bottom: 10px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="dateOut" class="text-primary">End date:</label>
+                    <input type="date" id="dateOut" name="dateOut" class="form-control" style="margin-bottom: 10px;">
+                </div>
+>>>>>>> origin/HEAD
+
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">Book</button>
+                </div>
+            </form>
+
+            {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
     </div>
-{% endfor %}
+</div>
+{% include 'components/footer.html.twig' %}
 {% endblock %}

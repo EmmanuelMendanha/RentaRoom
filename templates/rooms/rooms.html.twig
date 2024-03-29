@@ -1,16 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Rooms - RentaRoom{% endblock %}
+{% block title %}Rooms - RentaRoom
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+
+{% endblock %}
 
 {% block body %}
-    <h1>Rooms</h1>
+	{% include 'components/navbar.html.twig' %}
+	<main class="mb-5">
+		<div class="container">
+			<h1 class="mt-5">Rooms</h1>
+			<div class="row card-container">
+				{% for room in rooms %}
+					<div class="col-md-4 d-flex">
+						<div class="card mb-4 shadow-sm min-card-height d-flex flex-column">
+							<img src="{{ asset('images/') ~ room.imageMain }}" alt="{{ room.title }}" class="card-img-top">
+							<div class="card-body d-flex flex-column">
+								<h5 class="card-title">{{ room.title }}</h5>
+								<p class="card-text">{{ room.description|slice(0, 150) }}
+									{% if room.description|length > 80 %}...
+									{% endif %}
+								</p>
+								<!-- Affichage des classes Ergonomy et Equipment -->
 
-    {% for room in rooms %}
-    <div>
-        <h2><a href="{{ path('room_show', {id: room.id}) }}">{{ room.title }}</a></h2>
-        <p>{{ room.description }}</p>
-        <p>Price: {{ room.price }}</p>
-        <img src="{{ room.imageMain }}" alt="{{ room.title }}">
-    </div>
-{% endfor %}
+								<p>Ergonomy:
+									{% for ergonomic in room.getErgonomics %}
+										{{ ergonomic.getName }}
+										<!-- Affiche le nom de l'ergonomie -->
+										<i class="{{ ergonomic.getIcone }}"></i>
+										<!-- Affiche l'icône de l'ergonomie -->
+									{% endfor %}
+								</p>
+								<p>Equipment:
+									{% for equipment in room.getEquipments %}
+										{{ equipment.getName }}
+										<!-- Affiche le nom de l'équipement -->
+										<i class="{{ equipment.getIcone }}"></i>
+										<!-- Affiche l'icône de l'équipement -->
+									{% endfor %}
+								</p>
+								<div class="mt-auto">
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="btn-group">
+											<a href="{{ path('room_show', {id: room.id}) }}" class="btn btn-sm btn-outline-secondary">Booking</a>
+
+										</div>
+
+										<p>Price:
+											{{ room.price }}
+											&euro;</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</main>
+	{% include 'components/footer.html.twig' %}
 {% endblock %}

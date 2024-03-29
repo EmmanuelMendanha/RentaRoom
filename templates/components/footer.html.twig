@@ -1,120 +1,38 @@
-<footer class="py-8 my-5 bg-gray-200 py-md-11">
-	<div class="container">
-		<div class="row">
+<body class="d-flex flex-column min-vh-100">
+    <div class="content-wrapper flex-grow-1">
+        <!-- Votre contenu ici -->
+    </div>
 
-			<div class="col-6 col-md-4 col-lg-2">
+    <footer class="bg-primary py-md-11">
+        <div class="container">
+            <div class="row">
+                {% for i in 1..3 %}
+                    <div class="col-6 col-md-4 col-lg-4">
+                        <!-- Heading -->
+                       <a href="#!" class="text-reset">
+                                    Mentions légales
+                                </a>
 
-				<!-- Heading -->
-				<h6 class="text-gray-700 fw-bold text-uppercase">
-					Legal
-				</h6>
-
-				<!-- List -->
-				<ul class="mb-0 list-unstyled text-body-secondary">
-					<li class="mb-3">
-						<a href="#!" class="text-reset">
-							Documentation
-						</a>
-					</li>
-					<li class="mb-3">
-						<a href="#!" class="text-reset">
-							Changelog
-						</a>
-					</li>
-				</ul>
-
-			</div>
-			<div class="col-6 col-md-4 col-lg-2">
-
-				<!-- Heading -->
-				<h6 class="text-gray-700 fw-bold text-uppercase">
-					Legal
-				</h6>
-
-				<!-- List -->
-				<ul class="mb-0 list-unstyled text-body-secondary">
-					<li class="mb-3">
-						<a href="#!" class="text-reset">
-							Documentation
-						</a>
-					</li>
-					<li class="mb-3">
-						<a href="#!" class="text-reset">
-							Changelog
-						</a>
-					</li>
-				</ul>
-
-			</div>
-			<div
-				class="col-6 col-md-4 col-lg-2">
-
-				<!-- Heading -->
-				<h6 class="text-gray-700 fw-bold text-uppercase">
-					Legal
-				</h6>
-
-				<!-- List -->
-				<ul class="mb-0 list-unstyled text-body-secondary">
-					<li class="mb-3">
-						<a href="#!" class="text-reset">
-							Documentation
-						</a>
-					</li>
-					<li class="mb-3">
-						<a href="#!" class="text-reset">
-							Changelog
-						</a>
-					</li>
-				</ul>
-
-			</div>
-			<div
-				class="col-6 col-md-4 col-lg-2">
-
-				<!-- Heading -->
-				<h6 class="text-gray-700 fw-bold text-uppercase">
-					Legal
-				</h6>
-
-				<!-- List -->
-				<ul class="mb-0 list-unstyled text-body-secondary">
-					<li class="mb-3">
-						<a href="#!" class="text-reset">
-							Documentation
-						</a>
-					</li>
-					<li class="mb-3">
-						<a href="#!" class="text-reset">
-							Changelog
-						</a>
-					</li>
-				</ul>
-
-			</div>
-			<div
-				class="col-6 col-md-4 col-lg-2">
-
-				<!-- Heading -->
-				<h6 class="text-gray-700 fw-bold text-uppercase">
-					Legal
-				</h6>
-
-				<!-- List -->
-				<ul class="mb-0 list-unstyled text-body-secondary">
-					<li class="mb-3">
-						<a href="#!" class="text-reset">
-							Documentation
-						</a>
-					</li>
-					<li class="mb-3">
-						<a href="#!" class="text-reset">
-							Changelog
-						</a>
-					</li>
-				</ul>
-
-			</div>
-		</div>
-	</div>
-</footer>
+                        <!-- List -->
+                        <ul class="mb-0 list-unstyled text-body-secondary">
+                            <li class="mb-1">
+                                <a href="#!" class="text-reset">
+                                    Documentation
+                                </a>
+                            </li>
+                            <li class="mb-1">
+                                <a href="#!" class="text-reset">
+                                    Changelog
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% if i == 4 %}
+                        </div>
+                        <div class="row">
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </footer>
+</body>
