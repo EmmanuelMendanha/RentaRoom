@@ -24,7 +24,6 @@ class UserController extends AbstractController
             'bookings' => $bookings,
         ]);
     }
-<<<<<<< HEAD
 
 }
 
@@ -33,6 +32,3 @@ class UserController extends AbstractController
 
 
 
-=======
-}
->>>>>>> origin/HEAD

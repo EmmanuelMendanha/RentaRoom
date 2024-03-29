@@ -50,26 +50,5 @@ class RoomsController extends AbstractController
             'bookingForm' => $form->createView(),
         ]);
     }
-
-    #[Route('/rooms/{id}/book', name: 'room_book')]
-    public function bookRoom(RoomRepository $roomRepository, $id, EntityManagerInterface $em): Response
-    {
-        $room = $roomRepository->find($id);
-
-        
-        $booking = new Booking();
-        $booking->getRooms($room);
-        $booking->getUser($this->getUser()); // Assuming you have a logged in user.
-        $booking->setDateIn(new \DateTime()); // Set this to the desired start date.
-        $booking->setDateOut(new \DateTime()); // Set this to the desired end date.
-
-        $em->persist($booking);
-        $em->flush();
-
-        return $this->redirectToRoute('room_show', ['id' => $id]);
-
-    }
-
-
 }
 
