@@ -140,4 +140,16 @@ class Booking
         return $this;
     }
 
+    // Convert checkin date to string
+    public function getDateInString(): string
+    {
+        return $this->getDateIn()->format('d/m/Y');
+    }
+
+    // Convert checkout date to string
+    public function getDateOutString(): string
+    {
+        return $this->getDateOut()->format('d/m/Y');
+    }
+
 }

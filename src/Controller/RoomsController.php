@@ -36,11 +36,14 @@ class RoomsController extends AbstractController
             $booking = $form->getData();
             $booking->setUser($user);
             $booking->addRoom($room);
-            $booking->setNumber('test');
+            $booking->setNumber(substr(uniqid('booking-', true), 0, 15));
             $booking->setStatus(null);
         
             $em->persist($booking);
             $em->flush();
+
+            $this->addFlash('success', 'Booking created successfully. An confirmation email has been send. You can update or delete this booking in your profile');
+
 
             return $this->redirectToRoute('room_show', ['id' => $id]);
         }

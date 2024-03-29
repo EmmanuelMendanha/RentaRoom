@@ -13,6 +13,12 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
+
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
  	<body>
 			{% block body %}{% endblock %}            
 	</body>

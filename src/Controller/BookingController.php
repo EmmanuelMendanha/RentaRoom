@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Booking;
 use App\Entity\Room;
+use App\Entity\Booking;
+use App\Form\BookingType;
 use App\Repository\RoomRepository;
 use App\Repository\BookingRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,8 +21,10 @@ class BookingController extends AbstractController
     {
         return $this->render('booking/index.html.twig', [
             'controller_name' => 'BookingController',
+
         ]);
     }
+
 
     /*#[Route('/booking/{id}', name: 'booking_create', methods: ['POST', 'GET'])]
     public function create(RoomRepository $roomRepository, $id, EntityManagerInterface $em, FlashBagInterface $flashBag, Request $request): Response
@@ -56,15 +59,41 @@ class BookingController extends AbstractController
 
 
         return $this->redirectToRoute('app_booking');
-    }
-
-    /*#[Route('/booking/{id}/edit', name: 'booking_edit')]
-    public function edit(BookingRepository $bookingRepository, $id, EntityManagerInterface $em): Response
-    {
-    }
-
-    #[Route('/booking/{id}/delete', name: 'booking_delete')]
-    public function delete(BookingRepository $bookingRepository, $id, EntityManagerInterface $em): Response
-    {
     }*/
+
+
+#[Route('/booking/{id}/edit', name: 'booking_edit')]
+public function edit(Request $request, Booking $booking, EntityManagerInterface $em): Response
+{
+    $form = $this->createForm(BookingType::class, $booking);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $em->flush();
+
+        return $this->redirectToRoute('account');
+        $this->addFlash('success', 'Booking updated successfully.');
+
+    }
+
+    return $this->render('booking/edit.html.twig', [
+        'booking' => $booking,
+        'form' => $form->createView(),
+
+    ]);
 }
+
+#[Route('/booking/{id}/delete', name: 'delete')]
+public function delete(Booking $booking, EntityManagerInterface $em): Response
+{
+    $em->remove($booking);
+    $em->flush();
+
+    return $this->redirectToRoute('account');
+    $this->addFlash('success', 'Booking deleted successfully.');
+
+}
+}
+
+    
+
