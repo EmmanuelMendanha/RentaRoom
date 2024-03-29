@@ -23,7 +23,10 @@ class BookingController extends AbstractController
             'controller_name' => 'BookingController',
 
         ]);
+    
     }
+
+    
 
 
     /*#[Route('/booking/{id}', name: 'booking_create', methods: ['POST', 'GET'])]
