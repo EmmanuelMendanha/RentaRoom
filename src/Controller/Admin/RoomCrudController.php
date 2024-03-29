@@ -56,13 +56,13 @@ class RoomCrudController extends AbstractCrudController
             TextField::new('address')
             ->setLabel('Address')
             ->setHelp('The address of the room'),
-            MoneyField::new('price')
+            MoneyField::new('price')->setCurrency('EUR')
             ->setLabel('Price')
             ->setHelp('The price of the room'),
-            AssociationField::new('ergonomy')
+            AssociationField::new('ergonomics')
             ->setLabel('Ergonomy')
             ->setHelp('The ergonomy of the room'),
-            AssociationField::new('equipment')
+            AssociationField::new('equipments')
             ->setLabel('Equipment')
             ->setHelp('The equipment of the room'),
         ];
