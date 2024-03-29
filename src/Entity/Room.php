@@ -35,7 +35,7 @@ class Room
     private ?string $price = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $imageMain = null;
+    private ?string $imageMain = 'default.jpg';
 
     #[ORM\ManyToMany(targetEntity: Booking::class, inversedBy: 'rooms')]
     private Collection $bookings;
