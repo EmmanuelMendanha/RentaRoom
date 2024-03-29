@@ -8,7 +8,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class BookingCrudController extends AbstractCrudController
@@ -32,6 +35,44 @@ class BookingCrudController extends AbstractCrudController
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
+
+    public function configureFields(string $pageName): iterable
+{
+    return [
+        IdField::new('id')->hideOnForm(),
+        AssociationField::new('user'),
+
+        ChoiceField::new('status')
+            ->setChoices([
+                'En attente' => 'pending',
+                'Validé' => 'validated',
+            ])
+            ->allowMultipleChoices(false)
+            ->onlyOnForms(),
+        TextField::new('formattedStatus', 'Status')
+            ->formatValue(function ($value) {
+                if 
+                    ($value === null) {
+                    return 'En attente';
+                }
+
+                 if ($value === '1') {
+                    return 'Validé';
+                }
+                    if  ($value === '0') {
+                        return 'Refusé';
+                    }
+                
+                
+
+                return $value;
+                
+            })
+            ->onlyOnIndex(),
+        
+    ];
+}
+}
     /*
     public function configureFields(string $pageName): iterable
     {
@@ -42,4 +83,6 @@ class BookingCrudController extends AbstractCrudController
         ];
     }
     */
-}
+
+
+
