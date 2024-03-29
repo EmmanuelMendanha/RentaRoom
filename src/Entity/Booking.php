@@ -152,4 +152,26 @@ class Booking
         return $this->getDateOut()->format('d/m/Y');
     }
 
+    public function getFormattedStatus(): string
+{
+    if ($this->status === null) {
+        return 'En attente';
+    }
+
+    if ($this->status === '1') {
+        return 'Validé';
+    }
+
+    if ($this->status === '0') {
+        return 'Refusé';
+    }
+
+    return $this->status;
+}
+
+    public function __toString(): string
+    {
+        return $this->getFormattedStatus();
+    }
+
 }
