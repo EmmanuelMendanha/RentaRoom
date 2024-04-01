@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Room;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Model\SearchData;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Room>
@@ -20,7 +21,19 @@ class RoomRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Room::class);
     }
+    public function findBySearch(SearchData $search): array
+{
+    $query = $this
+        ->createQueryBuilder('r');
 
+    if (!empty($search->q)) {
+        $query = $query
+            ->andWhere('r.title LIKE :q')
+            ->setParameter('q', "%{$search->q}%");
+    }
+
+    return $query->getQuery()->getResult();
+}
     //    /**
     //     * @return Room[] Returns an array of Room objects
     //     */
