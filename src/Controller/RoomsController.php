@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Controller;
-
+use App\Form\SearchType;
+use App\Model\SearchData;
 use App\Entity\Booking;
 use App\Form\BookingType;
 use App\Repository\RoomRepository;
@@ -14,12 +15,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class RoomsController extends AbstractController
 {
     #[Route('/rooms', name: 'rooms')]
-    public function showAllRooms(RoomRepository $roomRepository): Response
+    public function showAllRooms(RoomRepository $roomRepository, Request $request): Response
     {
-        $rooms = $roomRepository->findAll();
+        $searchData = new SearchData();
+        $form = $this->createForm(SearchType::class, $searchData);
+        $form->handleRequest($request);
+
+        $rooms = [];
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rooms = $roomRepository->findBySearch($searchData);
+        } else {
+            $rooms = $roomRepository->findAll();
+        }
 
         return $this->render('rooms/rooms.html.twig', [
             'rooms' => $rooms,
+            'form' => $form->createView(),
         ]);
     }
 
