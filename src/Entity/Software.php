@@ -18,13 +18,14 @@ class Software
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Equipment::class, mappedBy: 'softwares')]
-    private Collection $equipment;
+    #[ORM\ManyToMany(targetEntity: Room::class, inversedBy: 'software')]
+    private Collection $softwares;
 
     public function __construct()
     {
-        $this->equipment = new ArrayCollection();
+        $this->softwares = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -43,35 +44,32 @@ class Software
         return $this;
     }
 
-    /**
-     * @return Collection<int, Equipment>
-     */
-    public function getEquipment(): Collection
-    {
-        return $this->equipment;
-    }
-
-    public function addEquipment(Equipment $equipment): static
-    {
-        if (!$this->equipment->contains($equipment)) {
-            $this->equipment->add($equipment);
-            $equipment->addSoftware($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEquipment(Equipment $equipment): static
-    {
-        if ($this->equipment->removeElement($equipment)) {
-            $equipment->removeSoftware($this);
-        }
-
-        return $this;
-    }
-
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection<int, Room>
+     */
+    public function getSoftwares(): Collection
+    {
+        return $this->softwares;
+    }
+
+    public function addSoftware(Room $software): static
+    {
+        if (!$this->softwares->contains($software)) {
+            $this->softwares->add($software);
+        }
+
+        return $this;
+    }
+
+    public function removeSoftware(Room $software): static
+    {
+        $this->softwares->removeElement($software);
+
+        return $this;
     }
 }

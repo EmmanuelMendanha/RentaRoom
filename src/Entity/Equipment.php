@@ -30,13 +30,9 @@ class Equipment
     #[ORM\ManyToMany(targetEntity: Room::class, mappedBy: 'equipments')]
     private Collection $rooms;
 
-    #[ORM\ManyToMany(targetEntity: Software::class, inversedBy: 'equipment')]
-    private Collection $softwares;
-
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
-        $this->softwares = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -115,30 +111,6 @@ class Equipment
         if ($this->rooms->removeElement($room)) {
             $room->removeEquipment($this);
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Software>
-     */
-    public function getSoftwares(): Collection
-    {
-        return $this->softwares;
-    }
-
-    public function addSoftware(Software $software): static
-    {
-        if (!$this->softwares->contains($software)) {
-            $this->softwares->add($software);
-        }
-
-        return $this;
-    }
-
-    public function removeSoftware(Software $software): static
-    {
-        $this->softwares->removeElement($software);
 
         return $this;
     }
