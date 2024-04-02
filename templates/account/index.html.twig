@@ -16,7 +16,12 @@
 						<h5 class="card-title">Booking #{{ booking.id }}</h5>
 						<p class="card-text">
 
-
+                            <strong>Title:</strong>
+							{% for item in booking.rooms %}
+							{{item.title}}<br>
+								
+							{% endfor %}
+							{# {{ booking.rooms.title }}<br> #}
 							<strong>Date In:</strong>
 							{{ booking.dateInString }}<br>
 							<strong>Date Out:</strong>

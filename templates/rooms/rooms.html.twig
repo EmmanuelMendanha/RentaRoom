@@ -13,6 +13,27 @@
 	<main class="mb-5">
 		<div class="container">
 			<h1 class="mt-5">Rooms</h1>
+
+			<form action="{{ path('rooms') }}" method="get">
+    <input type="text" name="name" placeholder="Name">
+    <input type="number" name="capacity" placeholder="Capacity">
+    <input type="number" name="price" placeholder="Price">
+    <select name="ergonomics">
+        <option value="">--Select Ergonomics--</option>
+        {% for ergonomic in ergonomics %}
+            <option value="{{ ergonomic.id }}">{{ ergonomic.name }}</option>
+        {% endfor %}
+    </select>
+    <select name="equipment">
+        <option value="">--Select Equipment--</option>
+        {% for equipment in equipments %}
+            <option value="{{ equipment.id }}">{{ equipment.name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Search</button>
+</form>
+
+
 			<div class="row card-container">
 				{% for room in rooms %}
 					<div class="col-md-4 d-flex">
@@ -24,13 +45,14 @@
 									{% if room.description|length > 80 %}...
 									{% endif %}
 								</p>
+								<p>Capacity: {{ room.capacity }}</p>
 								<!-- Affichage des classes Ergonomy et Equipment -->
 
 								<p>Ergonomy:
 									{% for ergonomic in room.getErgonomics %}
 										{{ ergonomic.getName }}
 										<!-- Affiche le nom de l'ergonomie -->
-										<i class="{{ ergonomic.getIcone }}"></i>
+										<img src={{ ergonomic.icone }}>
 										<!-- Affiche l'icône de l'ergonomie -->
 									{% endfor %}
 								</p>
@@ -56,9 +78,11 @@
 								</div>
 							</div>
 						</div>
+
 					</div>
 				{% endfor %}
 			</div>
+
 		</div>
 	</main>
 	{% include 'components/footer.html.twig' %}
