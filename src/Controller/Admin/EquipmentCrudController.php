@@ -7,9 +7,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class EquipmentCrudController extends AbstractCrudController
 {
@@ -32,14 +34,22 @@ class EquipmentCrudController extends AbstractCrudController
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
-    /*
+
+
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            TextField::new('name')
+            ->setHelp('The name of the equipment'),
+            TextField::new('description')
+            ->setHelp('The description of the equipment'),
+            IntegerField::new('quantity')
+            ->setHelp('The quantity of the equipment'),
+            TextField::new('icone')
+            ->setHelp('The icone of the equipment'),
+            AssociationField::new('softwares')
+            ->setHelp('The software of the equipment'),
         ];
     }
-    */
+
 }
