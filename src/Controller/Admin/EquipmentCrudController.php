@@ -47,8 +47,6 @@ class EquipmentCrudController extends AbstractCrudController
             ->setHelp('The quantity of the equipment'),
             TextField::new('icone')
             ->setHelp('The icone of the equipment'),
-            AssociationField::new('softwares')
-            ->setHelp('The software of the equipment'),
         ];
     }
 
