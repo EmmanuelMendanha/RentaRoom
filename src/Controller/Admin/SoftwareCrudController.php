@@ -35,15 +35,13 @@ class SoftwareCrudController extends AbstractCrudController
     }
 
   
-    public function configureFields(string $pageName): iterable
-    {
-        return [
-            IdField::new('id')
-            ->hideOnIndex(),
-            TextField::new('name')
-            ->setLabel('Name')
-            ->setHelp('The name of the software'),
-        ];
-    }
+    // public function configureFields(string $pageName): iterable
+    // {
+    //     return [
+    //         TextField::new('name')
+    //         ->setLabel('Name')
+    //         ->setHelp('The name of the software'),
+    //     ];
+    // }
    
 }

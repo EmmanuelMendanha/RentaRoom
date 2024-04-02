@@ -98,8 +98,9 @@ class RoomsController extends AbstractController
     $price = $request->query->get('price');
     $ergonomics = $request->query->get('ergonomics');
     $equipment = $request->query->get('equipment');
+    $software = $request->query->get('software');
 
-    $rooms = $roomRepository->search($name, $capacity, $price, $ergonomics, $equipment);
+    $rooms = $roomRepository->search($name, $capacity, $price, $ergonomics, $equipment, $software);
 
     return $this->render('rooms/index.html.twig', [
         'rooms' => $rooms,

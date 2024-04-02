@@ -18,7 +18,7 @@ class Software
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Room::class, inversedBy: 'software')]
+    #[ORM\ManyToMany(targetEntity: Room::class, mappedBy: 'software')]
     private Collection $softwares;
 
     public function __construct()

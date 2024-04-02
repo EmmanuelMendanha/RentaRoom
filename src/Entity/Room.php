@@ -49,7 +49,7 @@ class Room
     #[ORM\ManyToMany(targetEntity: Image::class, inversedBy: 'rooms')]
     private Collection $images;
 
-    #[ORM\ManyToMany(targetEntity: Software::class, mappedBy: 'softwares')]
+    #[ORM\ManyToMany(targetEntity: Software::class, inversedBy: 'softwares')]
     private Collection $software;
 
     public function __construct()
