@@ -8,8 +8,11 @@ use App\Entity\Booking;
 use App\Entity\Ergonomy;
 use App\Entity\Software;
 use App\Entity\Equipment;
+use App\Repository\RoomRepository;
+use App\Repository\BookingRepository;
 use App\Repository\BookingRepository;
 use Doctrine\ORM\EntityManagerInterface;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -17,7 +20,29 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
+
 {
+
+    private RoomRepository $roomRepository;
+    private BookingRepository $bookingRepository;
+
+    // Constructor
+    public function __construct(
+        RoomRepository $roomRepository,
+        BookingRepository $bookingRepository
+    ) {
+        $this->RoomRepository = $roomRepository;
+        $this->BookingRepository = $bookingRepository;
+    }    
+    #[Route('/admin', name: 'admin')]
+    public function index(): Response
+    {
+        return $this->render('admin/dashboard.html.twig', [
+            'bookings' => $this->BookingRepository->findAll(),
+        ]);
+
+
+  
     public function __construct(private BookingRepository $bookingRepository, private EntityManagerInterface $entityManager)
     {
 
@@ -93,4 +118,11 @@ public function deleteReservationRequest(int $id, EntityManagerInterface $entity
         yield MenuItem::linkToCrud('Software', 'fas fa-code', Software::class);
         yield MenuItem::linkToRoute('Back to the website', 'fas fa-home', 'home');
     }
+   
+   
+
+    
 }
+
+    
+

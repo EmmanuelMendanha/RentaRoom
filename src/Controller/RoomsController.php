@@ -1,17 +1,24 @@
 <?php
 
 namespace App\Controller;
-
+use App\Entity\Room;
 use App\Form\SearchType;
 use App\Model\SearchData;
 use App\Entity\Booking;
+use App\Entity\Ergonomy;
+use App\Entity\Equipment;
 use App\Form\BookingType;
 use App\Repository\RoomRepository;
+use App\Service\RoomFilterService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ErgonomicRepository;
+use App\Repository\EquipmentRepository;
 
 // Définition de la classe RoomsController qui hérite de AbstractController
 
@@ -37,7 +44,11 @@ class RoomsController extends AbstractController
         // Rendu de la vue 'rooms/rooms.html.twig' avec les chambres et le formulaire en paramètres
         return $this->render('rooms/rooms.html.twig', [
             'rooms' => $rooms,
+
+
+            'test' => $roomRepository->findByDescription('sint'),
             'form' => $form->createView(),
+
         ]);
     }
 
@@ -80,5 +91,39 @@ class RoomsController extends AbstractController
             'bookingForm' => $form->createView(),
         ]);
     }
+    public function index(Request $request, RoomRepository $roomRepository): Response
+{
+    $name = $request->query->get('name');
+    $capacity = $request->query->get('capacity');
+    $price = $request->query->get('price');
+    $ergonomics = $request->query->get('ergonomics');
+    $equipment = $request->query->get('equipment');
+
+    $rooms = $roomRepository->search($name, $capacity, $price, $ergonomics, $equipment);
+
+    return $this->render('rooms/index.html.twig', [
+        'rooms' => $rooms,
+    ]);
 }
+public function search(Request $request, RoomFilterService $roomFilterService, ErgonomicRepository $ergonomicRepository): Response
+{
+    $title = $request->query->get('title');
+    $capacity = $request->query->get('capacity');
+    $price = $request->query->get('price');
+    $ergonomics = $request->query->get('ergonomics');
+    $equipment = $request->query->get('equipment');
+
+    $rooms = $roomFilterService->filter($title, $capacity, $price, $ergonomics, $equipment);
+
+    return $this->render('rooms/rooms.html.twig', [
+        'rooms' => $rooms,
+        'ergonomics' => $ergonomics,
+    ]);
+}
+
+   
+}
+  
+    
+
 
