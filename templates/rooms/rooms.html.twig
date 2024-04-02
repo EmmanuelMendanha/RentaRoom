@@ -70,6 +70,10 @@
 										<i class="{{ equipment.getIcone }}"></i>
 										<!-- Affiche l'icône de l'équipement -->
 									{% endfor %}
+								</p>Sofware:
+									{% for item in room.software %}
+									{{ item.name }}
+									{% endfor %}
 								</p>
 								<div class="mt-auto">
 									<div class="d-flex justify-content-between align-items-center">
