@@ -105,21 +105,21 @@ class RoomsController extends AbstractController
         'rooms' => $rooms,
     ]);
 }
-public function search(Request $request, RoomFilterService $roomFilterService, ErgonomicRepository $ergonomicRepository): Response
-{
-    $title = $request->query->get('title');
-    $capacity = $request->query->get('capacity');
-    $price = $request->query->get('price');
-    $ergonomics = $request->query->get('ergonomics');
-    $equipment = $request->query->get('equipment');
+// public function search(Request $request, RoomFilterService $roomFilterService, ErgonomicRepository $ergonomicRepository): Response
+// {
+//     $title = $request->query->get('title');
+//     $capacity = $request->query->get('capacity');
+//     $price = $request->query->get('price');
+//     $ergonomics = $request->query->get('ergonomics');
+//     $equipment = $request->query->get('equipment');
 
-    $rooms = $roomFilterService->filter($title, $capacity, $price, $ergonomics, $equipment);
+//     $rooms = $roomFilterService->filter($title, $capacity, $price, $ergonomics, $equipment);
 
-    return $this->render('rooms/rooms.html.twig', [
-        'rooms' => $rooms,
-        'ergonomics' => $ergonomics,
-    ]);
-}
+//     return $this->render('rooms/rooms.html.twig', [
+//         'rooms' => $rooms,
+//         'ergonomics' => $ergonomics,
+//     ]);
+// }
 
    
 }
