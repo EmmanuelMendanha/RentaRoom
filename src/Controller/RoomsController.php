@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use App\Form\SearchType;
 use App\Model\SearchData;
 use App\Entity\Booking;
@@ -24,7 +25,7 @@ class RoomsController extends AbstractController
         $form = $this->createForm(SearchType::class, $searchData);
         $form->handleRequest($request);
 
-    // Si le formulaire est soumis et valide, on recherche les chambres correspondantes,
+        // Si le formulaire est soumis et valide, on recherche les chambres correspondantes,
         // sinon on récupère toutes les chambres
 
         $rooms = [];
@@ -33,7 +34,7 @@ class RoomsController extends AbstractController
         } else {
             $rooms = $roomRepository->findAll();
         }
-    // Rendu de la vue 'rooms/rooms.html.twig' avec les chambres et le formulaire en paramètres
+        // Rendu de la vue 'rooms/rooms.html.twig' avec les chambres et le formulaire en paramètres
         return $this->render('rooms/rooms.html.twig', [
             'rooms' => $rooms,
             'form' => $form->createView(),
@@ -53,12 +54,18 @@ class RoomsController extends AbstractController
         // Si le formulaire est soumis et valide, on met à jour le booking, on le persiste,
         // on ajoute un message flash de succès et on redirige vers la même page
         if ($form->isSubmitted() && $form->isValid()) {
+            $dateIn = $booking->getDateIn();
+            $dateOut = $booking->getDateOut();
+            if ($dateIn > $dateOut) {
+                $this->addFlash('error', 'La date de début doit être antérieure ou égale à la date de fin.');
+                return $this->redirect($request->headers->get('referer'));
+            }
             $booking = $form->getData();
             $booking->setUser($user);
             $booking->addRoom($room);
             $booking->setNumber(substr(uniqid('booking-', true), 0, 15));
             $booking->setStatus(null);
-        
+
             $em->persist($booking);
             $em->flush();
 
@@ -67,7 +74,7 @@ class RoomsController extends AbstractController
 
             return $this->redirectToRoute('room_show', ['id' => $id]);
         }
-           
+
         return $this->render('rooms/show.html.twig', [
             'room' => $room,
             'bookingForm' => $form->createView(),
