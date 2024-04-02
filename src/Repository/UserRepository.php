@@ -17,16 +17,18 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+
+// Définition de la classe UserRepository qui étend ServiceEntityRepository et implémente PasswordUpgraderInterface
+ class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    // Constructeur de la classe
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
 
-    /**
-     * Used to upgrade (rehash) the user's password automatically over time.
-     */
+    // Méthode pour mettre à jour (rehash) le mot de passe de l'utilisateur automatiquement avec le temps
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!$user instanceof User) {

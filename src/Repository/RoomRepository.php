@@ -15,21 +15,24 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  * @method Room[]    findAll()
  * @method Room[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
+
+// Définition de la classe RoomRepository qui étend ServiceEntityRepository
 class RoomRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Room::class);
     }
-    public function findBySearch(SearchData $search): array
+    // Méthode pour trouver des salles en fonction des critères de recherche
+    public function findBySearch(SearchData $search): array // Méthode findBySearch 
 {
-    $query = $this
-        ->createQueryBuilder('r');
+    $query = $this // 
+        ->createQueryBuilder('r');      // Crée une requête sur l'entité Room
 
-    if (!empty($search->q)) {
+    if (!empty($search->q)) {  // Si le champ de recherche n'est pas vide
         $query = $query
-            ->andWhere('r.title LIKE :q')
-            ->setParameter('q', "%{$search->q}%");
+            ->andWhere('r.title LIKE :q') // Ajoute une condition sur le titre
+            ->setParameter('q', "%{$search->q}%"); // Définit le paramètre de la requête
     }
 
     return $query->getQuery()->getResult();

@@ -20,8 +20,10 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
+// Définition de la classe RegistrationController qui hérite de AbstractController
 class RegistrationController extends AbstractController
 {
+     // Déclaration d'une propriété privée $emailVerifier et initialisation dans le constructeur
     public function __construct(private EmailVerifier $emailVerifier)
     {
         $this->emailVerifier = $emailVerifier;
@@ -31,10 +33,12 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, 
     Security $security ,EntityManagerInterface $entityManager): Response
     {
+        // Création d'un nouvel utilisateur et d'un formulaire d'inscription
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
+      // Si le formulaire est soumis et valide, on encode le mot de passe, on persiste l'utilisateur,
+        // on envoie un email de confirmation et on connecte l'utilisateur
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
@@ -64,14 +68,17 @@ class RegistrationController extends AbstractController
             return $security->login($user, LoginAuthenticator::class, 'main');
         }
 
+        // Rendu de la vue 'registration/register.html.twig' avec le formulaire en paramètre
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
         ]);
     }
-
+    
+    // Définition de la route '/verify/email' qui correspond à la méthode verifyUserEmail()
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository): Response
     {
+                // Récupération de l'id de l'utilisateur dans la requête
         $id = $request->query->get('id');
 
         if (null === $id) {

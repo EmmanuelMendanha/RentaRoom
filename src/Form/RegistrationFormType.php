@@ -17,50 +17,50 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
+            ->add('email') // Ajoute un champ pour l'adresse e-mail
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Vous devez accepter nos conditions.',
                     ]),
                 ],
-            ])
+            ]) // Ajoute un champ de case à cocher pour accepter les conditions
             ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
+                // au lieu d'être défini directement sur l'objet,
+                // cela est lu et encodé dans le contrôleur
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Veuillez entrer un mot de passe',
                     ]),
                     new Length([
                         'min' => 5,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
+                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
+                        // longueur maximale autorisée par Symfony pour des raisons de sécurité
                         'max' => 4096,
                     ]),
                 ],
-            ])
+            ]) // Ajoute un champ pour le mot de passe
             ->add('name', null, [
-                'label' => 'Name',
+                'label' => 'Nom',
                 'attr' => [
-                    'placeholder' => 'Enter the name of your company',
+                    'placeholder' => 'Entrez le nom de votre entreprise',
                 ],
-            ])
+            ]) // Ajoute un champ pour le nom
             ->add('phone', null, [
-                'label' => 'Phone',
+                'label' => 'Téléphone',
                 'attr' => [
-                    'placeholder' => 'Enter your phone number',
+                    'placeholder' => 'Entrez votre numéro de téléphone',
                 ],
-            ])
+            ]) // Ajoute un champ pour le téléphone
             ->add('address', null, [
-                'label' => 'Address',
+                'label' => 'Adresse',
                 'attr' => [
-                    'placeholder' => 'Enter your address',
+                    'placeholder' => 'Entrez votre adresse',
                 ],
-            ])
+            ]) // Ajoute un champ pour l'adresse
         ;
     }
 
