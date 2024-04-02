@@ -10,6 +10,13 @@
 
 {% block body %}
 	{% include 'components/navbar.html.twig' %}
+	<div class="text-center mt-3">
+		<h2>Search Results :</h2>
+	</div>
+	{% include 'components/_search_data.html.twig' with {
+		form: form
+	} only %}
+
 	<main class="mb-5">
 		<div class="container">
 			<h1 class="mt-5">Rooms</h1>

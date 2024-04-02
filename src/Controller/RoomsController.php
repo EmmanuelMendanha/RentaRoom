@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\Room;
+use App\Form\SearchType;
+use App\Model\SearchData;
 use App\Entity\Booking;
 use App\Entity\Ergonomy;
 use App\Entity\Equipment;
@@ -19,20 +20,39 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\ErgonomicRepository;
 use App\Repository\EquipmentRepository;
 
+// Définition de la classe RoomsController qui hérite de AbstractController
+
 class RoomsController extends AbstractController
 {
     #[Route('/rooms', name: 'rooms')]
-    public function showAllRooms(RoomRepository $roomRepository): Response
+    public function showAllRooms(RoomRepository $roomRepository, Request $request): Response
     {
-        $rooms = $roomRepository->findAll();
+        // Création d'un nouvel objet SearchData et d'un formulaire de recherche
+        $searchData = new SearchData();
+        $form = $this->createForm(SearchType::class, $searchData);
+        $form->handleRequest($request);
 
+        // Si le formulaire est soumis et valide, on recherche les chambres correspondantes,
+        // sinon on récupère toutes les chambres
+
+        $rooms = [];
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rooms = $roomRepository->findBySearch($searchData);
+        } else {
+            $rooms = $roomRepository->findAll();
+        }
+        // Rendu de la vue 'rooms/rooms.html.twig' avec les chambres et le formulaire en paramètres
         return $this->render('rooms/rooms.html.twig', [
             'rooms' => $rooms,
 
+
             'test' => $roomRepository->findByDescription('sint'),
+            'form' => $form->createView(),
+
         ]);
     }
 
+    // Définition de la route '/rooms/{id}' qui correspond à la méthode showRoom()
     #[Route('/rooms/{id}', name: 'room_show')]
     public function showRoom(RoomRepository $roomRepository, $id, Request $request, EntityManagerInterface $em): Response
     {
@@ -42,13 +62,21 @@ class RoomsController extends AbstractController
         $form = $this->createForm(BookingType::class, $booking);
         $form = $form->handleRequest($request);
 
+        // Si le formulaire est soumis et valide, on met à jour le booking, on le persiste,
+        // on ajoute un message flash de succès et on redirige vers la même page
         if ($form->isSubmitted() && $form->isValid()) {
+            $dateIn = $booking->getDateIn();
+            $dateOut = $booking->getDateOut();
+            if ($dateIn > $dateOut) {
+                $this->addFlash('error', 'La date de début doit être antérieure ou égale à la date de fin.');
+                return $this->redirect($request->headers->get('referer'));
+            }
             $booking = $form->getData();
             $booking->setUser($user);
             $booking->addRoom($room);
             $booking->setNumber(substr(uniqid('booking-', true), 0, 15));
             $booking->setStatus(null);
-        
+
             $em->persist($booking);
             $em->flush();
 

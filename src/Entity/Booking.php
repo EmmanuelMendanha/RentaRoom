@@ -9,9 +9,11 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 
+// Définition de la classe Booking et de son repository
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 class Booking
 {
+// Déclaration des propriétés de la classe   
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -34,12 +36,12 @@ class Booking
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $Number = null;
-
+ // Constructeur de la classe
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
     }
-
+// Getters et setters pour chaque propriété
     public function getId(): ?int
     {
         return $this->id;
@@ -140,7 +142,7 @@ class Booking
         return $this;
     }
 
-    // Convert checkin date to string
+   // Méthodes pour convertir les dates en chaînes de caractères
     public function getDateInString(): string
     {
         return $this->getDateIn()->format('d/m/Y');
@@ -151,7 +153,7 @@ class Booking
     {
         return $this->getDateOut()->format('d/m/Y');
     }
-
+     // Méthode pour obtenir le statut formaté
     public function getFormattedStatus(): string
 {
     if ($this->status === null) {
@@ -168,7 +170,7 @@ class Booking
 
     return $this->status;
 }
-
+    // Méthode pour convertir l'objet en chaîne de caractères
     public function __toString(): string
     {
         return $this->getFormattedStatus();

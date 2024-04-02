@@ -10,6 +10,9 @@ use App\Entity\Software;
 use App\Entity\Equipment;
 use App\Repository\RoomRepository;
 use App\Repository\BookingRepository;
+use App\Repository\BookingRepository;
+use Doctrine\ORM\EntityManagerInterface;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -39,14 +42,71 @@ class DashboardController extends AbstractDashboardController
         ]);
 
 
-        
-    }
+  
+    public function __construct(private BookingRepository $bookingRepository, private EntityManagerInterface $entityManager)
+    {
 
+    }
+    #[Route('/admin', name: 'admin')]
+    public function index(): Response
+    {
+        $currentDate = new \DateTime();
+        $allbookings = $this->bookingRepository->findAll();
+    
+        $urgentBookings = [];
+        foreach ($allbookings as $bookings) {
+            if ($bookings->getDateIn()->diff($currentDate)->days <= 5 && !$bookings->isStatus()) {
+                $urgentBookings[] = $bookings;
+            }
+        }
+    
+        return $this->render('admin/dashboard.html.twig', [
+            'bookings' => $allbookings,
+            'urgentBookings' => $urgentBookings
+        ]);
+    }
+    
+    
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('RentaRoom');
+        
+        ->setTitle('RentaRoom')
+        ->renderContentMaximized();
     }
+    
+    #[Route('/admin/reservation/{id}/confirm', name: 'admin_booking_confirm')]
+  
+    public function confirmReservation(Booking $booking,int $id, EntityManagerInterface $entityManager)
+    {
+        $booking = $entityManager->getRepository(Booking::class)->find($id);
+
+    if (!$booking) {
+        throw $this->createNotFoundException('Pas de reservation liée à cet id '.$id);
+    }
+
+        $booking->SetStatus(True);
+        $entityManager->flush();
+        $this->addFlash('success', 'La réservation a bien été confirmer');
+        return $this->redirectToRoute('admin');
+    }
+
+
+    #[Route('/admin/reservation/{id}/cancel', name: 'admin_booking_cancel')]
+
+public function deleteReservationRequest(int $id, EntityManagerInterface $entityManager)
+{
+    $booking = $entityManager->getRepository(Booking::class)->find($id);
+
+    if (!$booking) {
+        throw $this->createNotFoundException('Pas de reservation liée à cet id '.$id);
+    }
+    $entityManager->remove($booking);
+    $entityManager->flush();
+    $this->addFlash('success', 'La réservation a bien été annulée');
+    return $this->redirectToRoute('admin'); 
+}
+   
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
