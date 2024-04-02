@@ -19,19 +19,20 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 class LoginAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
-
+  // Définition de la constante LOGIN_ROUTE
     public const LOGIN_ROUTE = 'app_login';
 
     public function __construct(private UrlGeneratorInterface $urlGenerator)
     {
     }
-
+ // Méthode pour authentifier l'utilisateur
     public function authenticate(Request $request): Passport
     {
+ // Récupération de l'email de l'utilisateur        
         $email = $request->getPayload()->getString('email');
-
+// Enregistrement du dernier nom d'utilisateur utilisé
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
-
+// Création et retour d'un nouveau Passport
         return new Passport(
             new UserBadge($email),
             new PasswordCredentials($request->getPayload()->getString('password')),
@@ -41,18 +42,20 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             ]
         );
     }
-
+// Méthode appelée en cas de succès de l'authentification
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+// Si un chemin cible est défini, redirection vers ce chemin        
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
+// Sinon, redirection vers la page d'administration 
         return new RedirectResponse($this->urlGenerator->generate('admin'));
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
-
+// Méthode pour obtenir l'URL de connexion
     protected function getLoginUrl(Request $request): string
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);

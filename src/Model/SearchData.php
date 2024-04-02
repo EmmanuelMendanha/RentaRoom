@@ -2,11 +2,11 @@
 
 namespace App\Model;
 
-class SearchData
+class SearchData  // Classe SearchData
 {
     /** @var int */
-    public $page = 1;
+    public $page = 1; // Page par défaut
 
     /** @var string */
-    public string $q = '';
+    public string $q = ''; // Recherche par mot clé
 }

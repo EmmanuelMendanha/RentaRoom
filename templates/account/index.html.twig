@@ -1,42 +1,33 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	{% include 'components/navbar.html.twig' %}
-	<h1>
-		Hello
-		{{ user.name }}
-		!</h1>
-	<h1>This is your bookings</h1>
+    {% include 'components/navbar.html.twig' %}
+<h1 style="padding: 1cm; font-family: 'Montserrat', sans-serif; text-align: center; color: #3D8BFD;">
+        Hello, {{ user.name }}!
+    </h1>
+    <h1 style="font-family: 'Montserrat', sans-serif; text-align: center; color: #3D8BFD;">
+        This is your bookings
+    </h1>
 
-	<div class="row">
-		{% for booking in bookings %}
-			<div class="col-md-4">
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">Booking #{{ booking.id }}</h5>
-						<p class="card-text">
-
-
-							<strong>Date In:</strong>
-							{{ booking.dateInString }}<br>
-							<strong>Date Out:</strong>
-							{{ booking.dateOutString }}<br>
-							<strong>Référence booking:</strong>
-							{{ booking.number }}<br>
-							<strong>Booking status:</strong>
-							{% if booking.status == null %}
-								En attente de validation
-							{% else %}
-								Validé
-							{% endif %}
-						</p>
-						<a href="{{ path('booking_edit', {id: booking.id}) }}" class="btn btn-primary">Edit</a>
-						<a href="{{ path('delete', {id: booking.id}) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this booking?')">Delete</a>
-					</div>
-				</div>
-			</div>
-		{% endfor %}
-
-	</div>
-
+    <div class="container" style="padding: 5cm 0;"> <!-- Ajoutez une marge de 3cm en haut et en bas -->
+        <div class="row">
+            {% for booking in bookings %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-family: 'Montserrat', sans-serif;">Booking #{{ booking.id }}</h5>
+                            <p class="card-text" style="font-family: 'Montserrat', sans-serif;">
+                                <strong>Date In:</strong> {{ booking.dateInString }}<br>
+                                <strong>Date Out:</strong> {{ booking.dateOutString }}<br>
+                                <strong>Booking Reference:</strong> {{ booking.number }}<br>
+                                <strong>Booking Status:</strong> {% if booking.status == null %}Waiting for validation{% else %}Validated{% endif %}
+                            </p>
+                            <a href="{{ path('booking_edit', {id: booking.id}) }}" class="btn btn-primary" style="font-family: 'Montserrat', sans-serif;">Edit</a>
+                            <a href="{{ path('delete', {id: booking.id}) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this booking?')" style="font-family: 'Montserrat', sans-serif;">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

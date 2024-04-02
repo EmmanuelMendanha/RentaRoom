@@ -10,7 +10,7 @@
 		<div class="row justify-content-center">
 			<div class="col-md-8">
 				<div class="card mb-4 shadow-sm">
-					<img src="{{ asset('images/') ~ room.imageMain }}" alt="{{ room.title }}" class="card-img-top">
+					<img src="{{ asset('images/') ~ room.imageMain }}" alt="{{ room.title }}" class="card-img-top" width="200" height="500">
 					<div class="card-body">
 						<h1 class="card-title">{{ room.title }}</h1>
 						<p class="card-text">{{ room.description }}</p>
@@ -52,7 +52,7 @@
                         }) }}
 			<label for="floatingInput">Date de fin</label>
 		</div>
-		<button type="submit" class="btn btn-primary">Réserver</button>
+		<button type="submit" class="btn btn-primary" style="margin-bottom: 3cm;">Réserver</button>
 		{{ form_end(bookingForm) }}
 
 {% endblock %}
