@@ -141,40 +141,6 @@ class RoomsController extends AbstractController
 //     ]);
 // }
 
-/*$existingBookings = $bookingRepository->findOverlappingBookings($room, $dateIn, $dateOut);
-
-            if (!empty($existingBookings)) {
-                // Si des réservations conflictuelles existent, informer l'utilisateur avec un message d'erreur
-                $firstConflictReservation = $existingBookings[0];
-                $conflictStartDate = $firstConflictReservation->getDateIn()->format('d-m-Y');
-                $conflictEndDate = $firstConflictReservation->getDateOut()->format('d-m-Y');
-                // $conflictRoomName = $firstConflictReservation->getRoom()->getTitle();
-            
-                $errorMessage = "Désolé, la salle est déjà réservée du " . $conflictStartDate . " au " . $conflictEndDate . ". Veuillez choisir une autre date ou salle.";
-                $this->addFlash('errorResa', $errorMessage);
-            
-                // Retourner la vue avec le message d'erreur et d'autres données nécessaires
-                return $this->render('rooms/show.html.twig', [
-                    'controller_name' => 'PageController',
-                    'room' => $room,
-                    'errors' => [],
-                    // 'bookingForm' => $form,
-                ]);
-            }else{
-            $booking = $form->getData();
-            $booking->setUser($user);
-            $booking->addRoom($room);
-            $booking->setNumber(substr(uniqid('booking-', true), 0, 15));
-            $booking->setStatus(null);
-            
-            $em->persist($booking);
-            $em->flush();
-
-            $this->addFlash('success', 'Booking created successfully. An confirmation email has been send. You can update or delete this booking in your profile');
-
-
-            return $this->redirectToRoute('room_show', ['id' => $id,'bookingForm' => $form->createView(),],);
-        }*/
    
 }
   
