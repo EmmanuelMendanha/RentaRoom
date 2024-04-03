@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class SearchData  // Classe SearchData
+class SearchData  // Classe SearchData contient deux propriétés publiques : page et q
 {
     /** @var int */
     public $page = 1; // Page par défaut

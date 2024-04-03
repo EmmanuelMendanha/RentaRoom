@@ -23,6 +23,8 @@ class SearchType extends AbstractType
             ]);
     }
     // Configuration des options du formulaire
+    // "Valide les options et les fusionne avec les valeurs par défaut
+    
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

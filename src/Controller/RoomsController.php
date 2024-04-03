@@ -17,23 +17,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class RoomsController extends AbstractController
 {
     #[Route('/rooms', name: 'rooms')]
-    public function showAllRooms(RoomRepository $roomRepository, Request $request): Response
+    public function showAllRooms(RoomRepository $roomRepository, Request $request): Response    // Définition de la méthode showAllRooms() qui prend en paramètres un objet RoomRepository et un objet Request
     {
         // Création d'un nouvel objet SearchData et d'un formulaire de recherche
         $searchData = new SearchData();
         $form = $this->createForm(SearchType::class, $searchData);
         $form->handleRequest($request);
 
-    // Si le formulaire est soumis et valide, on recherche les chambres correspondantes,
-        // sinon on récupère toutes les chambres
-
+    // Si le formulaire est soumis et valide, on recherche les salles correspondantes,
+        // sinon on récupère toutes les salles
+!
         $rooms = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $rooms = $roomRepository->findBySearch($searchData);
         } else {
             $rooms = $roomRepository->findAll();
         }
-    // Rendu de la vue 'rooms/rooms.html.twig' avec les chambres et le formulaire en paramètres
+    // Rendu de la vue 'rooms/rooms.html.twig' avec les salles et le formulaire en paramètres
         return $this->render('rooms/rooms.html.twig', [
             'rooms' => $rooms,
             'form' => $form->createView(),
