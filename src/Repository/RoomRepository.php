@@ -29,6 +29,12 @@ class RoomRepository extends ServiceEntityRepository
     $query = $this // 
         ->createQueryBuilder('r');      // Crée une requête sur l'entité Room
 
+
+       /**
+         @return Room[] Returns an array of Room objects
+         */
+        
+    //    public function findByTitle($value): array
     if (!empty($search->q)) {  // Si le champ de recherche n'est pas vide
         $query = $query
             ->andWhere('r.title LIKE :q') // Ajoute une condition sur le titre
@@ -43,10 +49,10 @@ class RoomRepository extends ServiceEntityRepository
     //    public function findByExampleField($value): array
     //    {
     //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
+    //            ->andWhere('r.title = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
+    //            ->orderBy('r.title', 'ASC')
+    //            //->setMaxResults()
     //            ->getQuery()
     //            ->getResult()
     //        ;
@@ -61,4 +67,5 @@ class RoomRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    
 }

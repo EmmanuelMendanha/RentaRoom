@@ -20,6 +20,9 @@ class BookingRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Booking::class);
     }
+    
+
+ 
 
     //    /**
     //     * @return Booking[] Returns an array of Booking objects
@@ -45,4 +48,17 @@ class BookingRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    /*public function findOverlappingBookings($room,\DateTimeInterface $dateIn, \DateTimeInterface $dateOut): array
+    {
+        return $this->createQueryBuilder('b')
+            ->where('r.id = :room')
+            ->andWhere('b.dateIn < :dateOut')
+            ->andWhere('b.dateOut > :dateIn')
+            ->innerJoin('b.rooms', 'r')
+            ->setParameter('room', $room->getId())
+            ->setParameter('dateIn', $dateIn)
+            ->setParameter('dateOut', $dateOut)
+            ->getQuery()
+            ->getResult();
+    }*/
 }

@@ -65,6 +65,9 @@ class RoomCrudController extends AbstractCrudController
             AssociationField::new('equipments')
             ->setLabel('Equipment')
             ->setHelp('The equipment of the room'),
+            AssociationField::new('software')
+            ->setLabel('Software')
+            ->setHelp('The software of the room'),
         ];
     }
 }

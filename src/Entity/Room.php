@@ -49,12 +49,16 @@ class Room
     #[ORM\ManyToMany(targetEntity: Image::class, inversedBy: 'rooms')]
     private Collection $images;
 
+    #[ORM\ManyToMany(targetEntity: Software::class, inversedBy: 'softwares')]
+    private Collection $software;
+
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
         $this->ergonomics = new ArrayCollection();
         $this->equipments = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->software = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -245,5 +249,32 @@ class Room
     public function __toString(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return Collection<int, Software>
+     */
+    public function getSoftware(): Collection
+    {
+        return $this->software;
+    }
+
+    public function addSoftware(Software $software): static
+    {
+        if (!$this->software->contains($software)) {
+            $this->software->add($software);
+            $software->addSoftware($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSoftware(Software $software): static
+    {
+        if ($this->software->removeElement($software)) {
+            $software->removeSoftware($this);
+        }
+
+        return $this;
     }
 }
