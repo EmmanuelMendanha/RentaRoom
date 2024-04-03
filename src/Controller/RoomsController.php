@@ -19,14 +19,19 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\ErgonomicRepository;
 use App\Repository\EquipmentRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 
 // Définition de la classe RoomsController qui hérite de AbstractController
 
 class RoomsController extends AbstractController
 {
     #[Route('/rooms', name: 'rooms')]
-    public function showAllRooms(RoomRepository $roomRepository, Request $request): Response
+    public function showAllRooms(RoomRepository $roomRepository, Request $request, Security $security): Response
     {
+        if (!$security->getUser()) {
+            // Rediriger vers la page de connexion
+            return $this->redirectToRoute('app_login');
+        }else{
         // Création d'un nouvel objet SearchData et d'un formulaire de recherche
         $searchData = new SearchData();
         $form = $this->createForm(SearchType::class, $searchData);
@@ -49,7 +54,7 @@ class RoomsController extends AbstractController
             'test' => $roomRepository->findByDescription('sint'),
             'form' => $form->createView(),
 
-        ]);
+        ]);}
     }
 
     // Définition de la route '/rooms/{id}' qui correspond à la méthode showRoom()
