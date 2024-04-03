@@ -26,11 +26,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 class RoomsController extends AbstractController
 {
     #[Route('/rooms', name: 'rooms')]
-<<<<<<< HEAD
-    public function showAllRooms(RoomRepository $roomRepository, Request $request): Response    // Définition de la méthode showAllRooms() qui prend en paramètres un objet RoomRepository et un objet Request
-=======
     public function showAllRooms(RoomRepository $roomRepository, Request $request, Security $security): Response
->>>>>>> 05ee255624528b46abaf29eebfeb7fbadca7ade5
     {
         if (!$security->getUser()) {
             // Rediriger vers la page de connexion
@@ -41,26 +37,16 @@ class RoomsController extends AbstractController
         $form = $this->createForm(SearchType::class, $searchData);
         $form->handleRequest($request);
 
-<<<<<<< HEAD
-    // Si le formulaire est soumis et valide, on recherche les salles correspondantes,
-        // sinon on récupère toutes les salles
-!
-=======
         // Si le formulaire est soumis et valide, on recherche les chambres correspondantes,
         // sinon on récupère toutes les chambres
 
->>>>>>> 05ee255624528b46abaf29eebfeb7fbadca7ade5
         $rooms = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $rooms = $roomRepository->findBySearch($searchData);
         } else {
             $rooms = $roomRepository->findAll();
         }
-<<<<<<< HEAD
-    // Rendu de la vue 'rooms/rooms.html.twig' avec les salles et le formulaire en paramètres
-=======
         // Rendu de la vue 'rooms/rooms.html.twig' avec les chambres et le formulaire en paramètres
->>>>>>> 05ee255624528b46abaf29eebfeb7fbadca7ade5
         return $this->render('rooms/rooms.html.twig', [
             'rooms' => $rooms,
 
