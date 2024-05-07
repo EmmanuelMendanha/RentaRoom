@@ -19,4 +19,26 @@
 
 ## 🚀 Commencer
 1. Clonez le dépôt :
-   '''git clone https://github.com/votreusername/rentaroom.git
+ ```bash
+git clone https://github.com/votreusername/rentaroom.git
+ ```
+2. Installez les dépendances :
+   ```bash
+   composer install
+   ```
+3. Configurez votre base de données dans `.env` et exécutez :
+   ```bash
+   php bin/console doctrine:migrations:migrate
+   ```
+4. Lancez le serveur :
+   ```bash
+   symfony server:start
+   ```
+## 🤝 Contribution
+Les contributions sont toujours les bienvenues! Veuillez créer une issue pour discuter de ce que vous aimeriez changer.
+
+## 📄 Licence
+Distribué sous la licence MIT. Voir `LICENSE` pour plus d'informations.
+
+
+   
